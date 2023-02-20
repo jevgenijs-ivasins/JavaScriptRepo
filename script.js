@@ -61,7 +61,6 @@ function displayMaze(maze){
             }else{
                 mazeElement.style.border = "thin solid white";
             }
-
             xArray.push(mazeElement);
         }
         let breakpoint = document.createElement('br');
@@ -122,26 +121,28 @@ function displayEndPoint(endPoint){
     elementArray[endPoint[Y]][endPoint[X]].style.backgroundColor = "red";
 }
 
-
-// IDK WHY DOESN'T IT WORK
 function isWayPossible(direction){
     switch(direction){
         case MOVE_LEFT:
             if(maze[playerPos[Y]][(playerPos[X] - 1)] === WALL){
                 return false;
             }
+        break;
         case MOVE_UP:
             if(maze[(playerPos[Y] - 1)][playerPos[X]] === WALL ){
                 return false;
             }
+        break;
         case MOVE_RIGHT:
             if(maze[playerPos[Y]][(playerPos[X] + 1)] === WALL ){
                 return false;
             }
+        break;
         case MOVE_DOWN:
             if(maze[(playerPos[Y] + 1)][playerPos[X]] === WALL ){
                 return false;
-            }        
+            }  
+        break;      
     }
     return true;
 }
