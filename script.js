@@ -73,7 +73,7 @@ function displayMaze(maze){
 function movePlayer(direction){
     switch(direction){
         case MOVE_LEFT:
-            if(maze[playerPos[Y]][(playerPos[X] - 1)] === PATH){
+            if(isWayPossible(MOVE_LEFT)){
                 elementArray[playerPos[Y]][playerPos[X]].style.backgroundColor = "white";
                 playerPos[X] = playerPos[X] - 1;
                 elementArray[playerPos[Y]][playerPos[X]].style.backgroundColor = "green";
@@ -82,7 +82,7 @@ function movePlayer(direction){
             }
             break;
         case MOVE_UP:
-            if(maze[(playerPos[Y] - 1)][playerPos[X]] === PATH){
+            if(isWayPossible(MOVE_UP)){
                 elementArray[playerPos[Y]][playerPos[X]].style.backgroundColor = "white";
                 playerPos[Y] = playerPos[Y] - 1;
                 elementArray[playerPos[Y]][playerPos[X]].style.backgroundColor = "green";
@@ -91,7 +91,7 @@ function movePlayer(direction){
             }
             break;
         case MOVE_RIGHT:
-            if(maze[playerPos[Y]][(playerPos[X] + 1)] === PATH){
+            if(isWayPossible(MOVE_RIGHT)){
                 elementArray[playerPos[Y]][playerPos[X]].style.backgroundColor = "white";
                 playerPos[X] = playerPos[X] + 1;
                 elementArray[playerPos[Y]][playerPos[X]].style.backgroundColor = "green";
@@ -100,7 +100,7 @@ function movePlayer(direction){
             }
             break;
         case MOVE_DOWN:
-            if(maze[playerPos[Y] + 1][(playerPos[X])] === PATH ){
+            if(isWayPossible(MOVE_DOWN)){
                 elementArray[playerPos[Y]][playerPos[X]].style.backgroundColor = "white";
                 playerPos[Y] = playerPos[Y] + 1;
                 elementArray[playerPos[Y]][playerPos[X]].style.backgroundColor = "green";
