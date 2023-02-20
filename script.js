@@ -51,6 +51,7 @@ function displayMaze(maze){
     }
 }
 
+// Function to move object from one place to another by specifying direction. If movement is impossible, nothing will happen.    
 function moveObj(direction, objPosition){
     switch(direction){
         case MOVE_LEFT:
@@ -89,6 +90,7 @@ function moveObj(direction, objPosition){
     checkWinCondition();
 }
 
+// Function to calculate new position coorditanes based on direction and initial position
 function calcNewPos(direction, objPosition){
     newPos = structuredClone(objPosition)
     switch(direction){
@@ -107,10 +109,7 @@ function calcNewPos(direction, objPosition){
     }
 }
 
-function displayPathPoint(position){
-    elementArray[position[Y]][position[X]].style.backgroundColor = "violet";
-}
-
+// Function to check if certain movement is possible or not
 function isWayPossible(direction, objPosition){
     switch(direction){
         case MOVE_LEFT:
@@ -136,8 +135,69 @@ function isWayPossible(direction, objPosition){
     }
     return true;
 }
+// Compare values in array by values of another one array
+function arrayIncludes(array, search){
+    for(index = 0; index < array.length; index++){
+        if(array[index][Y] == search[Y] && array[index][X] == search[X]){
+            return true;
+        }
+    }
+    return false;
+}
+// Compare two arrays by values
+const equalsCheck = (a, b) => {
+    return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/*  ###################################################
+    PLAYER CONTROLS SECTION AND MANUAL MAZE NAVIGATION
+    ################################################### */
+    
+    document.addEventListener('keydown',function(e){
+        let playerPrevPos = playerPos;
+        switch(e.code){
+            case "ArrowLeft":
+                playerPos = moveObj(MOVE_LEFT,playerPos);
+    
+                break;
+            case "ArrowUp":
+                playerPos = moveObj(MOVE_UP,playerPos);
+                break;
+            case "ArrowRight":
+                playerPos = moveObj(MOVE_RIGHT,playerPos);
+                break;
+            case "ArrowDown":
+                playerPos = moveObj(MOVE_DOWN,playerPos);
+                break;
+        }
+        if(playerPos === undefined){
+            playerPos = playerPrevPos
+        }
+    });
+    
+// Display player at start ( in this implementation ovveriden by shortest path )  
+    function displayPlayer(currentPlayerPos){
+        elementArray[currentPlayerPos[Y]][currentPlayerPos[X]].style.backgroundColor = "green";
+    }
+
+// Function to check win condition for player and his location
+    function checkWinCondition(){
+        if(equalsCheck(playerPos,endPoint)){
+            alert("You won!");
+        }
+    }
+
+// Function to display end point at start ( in this implementation ovveriden by shortest path )
+    function displayEndPoint(endPoint){
+        elementArray[endPoint[Y]][endPoint[X]].style.backgroundColor = "red";
+    }
 
 
+/*  ###################################################
+               SHORTEST PATH GENERATION SECTION
+    ################################################### */
+
+// Function to detect all possible paths from the current point
 function pathDetectDirections(crawlerPos, path){
     let directionList = [];
     if(isWayPossible(MOVE_DOWN,crawlerPos) && !arrayIncludes(path,calcNewPos(MOVE_DOWN,crawlerPos))){
@@ -169,16 +229,8 @@ function pathDetectDirections(crawlerPos, path){
         mazeCrawlerMove(crawlerPos,directionList[0],path);
     }
 }
-function arrayIncludes(array, search){
-    for(index = 0; index < array.length; index++){
-        if(array[index][Y] == search[Y] && array[index][X] == search[X]){
-            return true;
-        }
-    }
-    return false;
-}
 
-
+// Navigation for crawler through specific direction, saving the path
 function mazeCrawlerMove(crawlerPos, direction, path){
     newPos = calcNewPos(direction,crawlerPos);
     elementArray[newPos[Y]][newPos[X]].style.backgroundColor = "yellow";
@@ -186,10 +238,7 @@ function mazeCrawlerMove(crawlerPos, direction, path){
     pathDetectDirections(newPos,path);
 }
 
-const equalsCheck = (a, b) => {
-    return JSON.stringify(a) === JSON.stringify(b);
-}
-
+// Shortest path visualization
 function visualizeShortestPath(mazePaths){
     let minLength = mazePaths[0].length;
     let shortestPath = mazePaths[0];
@@ -205,44 +254,16 @@ function visualizeShortestPath(mazePaths){
 }
 
 displayMaze(maze);
+displayPlayer(playerPos);
+displayEndPoint(endPoint);
+
+// For first element to be starting point of crawler
 let path = [crawlerStartPos];
 pathDetectDirections(crawlerStartPos,path);
 visualizeShortestPath(mazePaths);
 
 
 
-/*  ###################################################
-    PLAYER CONTROLS SECTION AND MANUAL MAZE NAVIGATION
-    ###################################################
-document.addEventListener('keydown',function(e){
-    switch(e.code){
-        case "ArrowLeft":
-            moveObj(MOVE_LEFT,playerPos);
-            break;
-        case "ArrowUp":
-            moveObj(MOVE_UP,playerPos);
-            break;
-        case "ArrowRight":
-            moveObj(MOVE_RIGHT,playerPos);
-            break;
-        case "ArrowDown":
-            moveObj(MOVE_DOWN,playerPos);
-            break;
-    }
-});
-*/
-/*
-function displayPlayer(currentPlayerPos){
-    elementArray[currentPlayerPos[Y]][currentPlayerPos[X]].style.backgroundColor = "green";
-}
-function checkWinCondition(){
-    if(playerPos[Y] === 8 && playerPos[X] === 9){
-        alert("You won!");
-    }
-}
 
-function displayEndPoint(endPoint){
-    elementArray[endPoint[Y]][endPoint[X]].style.backgroundColor = "red";
-}
-*/
+
 
