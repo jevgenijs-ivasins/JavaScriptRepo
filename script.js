@@ -9,7 +9,7 @@ let maze =   [[1,0,1,1,1,1,1,1,1,1],
               [1,0,0,0,0,0,1,1,0,0],
               [1,1,1,1,1,1,1,1,1,1],]
 
-var elementArray = [];
+let elementArray = [];
 
 let playerPos = [0,1]
 
