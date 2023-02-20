@@ -190,7 +190,7 @@ const equalsCheck = (a, b) => {
     return JSON.stringify(a) === JSON.stringify(b);
 }
 
-function visualizeShortetPath(mazePaths){
+function visualizeShortestPath(mazePaths){
     let minLength = mazePaths[0].length;
     let shortestPath = mazePaths[0];
     for(index = 1; index < mazePaths.length; index++){
@@ -205,10 +205,9 @@ function visualizeShortetPath(mazePaths){
 }
 
 displayMaze(maze);
-
 let path = [crawlerStartPos];
 pathDetectDirections(crawlerStartPos,path);
-visualizeShortetPath(mazePaths);
+visualizeShortestPath(mazePaths);
 
 
 
