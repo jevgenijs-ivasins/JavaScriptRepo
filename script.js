@@ -1,4 +1,4 @@
-let MazeProgram = (function ()
+(function mazeProgram()
 {
 
 
@@ -269,9 +269,7 @@ let MazeProgram = (function ()
         pathDetectDirections(crawlerStartPos, path);
         visualizeShortestPath(mazePaths);
     }
-    return{
-        start: startMazeScript
-    };
+    return startMazeScript();
 })();
 
-MazeProgram.start();
+
