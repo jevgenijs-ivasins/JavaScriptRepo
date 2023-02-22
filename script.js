@@ -1,4 +1,4 @@
-var MazeProgram = (function ()
+let MazeProgram = (function ()
 {
 
 
